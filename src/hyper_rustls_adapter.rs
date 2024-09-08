@@ -168,8 +168,9 @@ impl Adapter for HyperRustlsAdapter {
         };
 
         let request = request
-            .body(Body::from(req_str))
-            .map_err(|e| Error::new_from(ErrorKind::ExchangeFailure, e))?;
+            .uri(config.provider().token_uri().to_string().to_owned() + "?" + &req_str)
+            .body(Body::from("not found"))
+            .unwrap();
 
         let response = self
             .client
